@@ -1,7 +1,4 @@
 spring:
-  h2.console:
-    enabled: true
-    path: '/console'
   datasource:
     url: 'jdbc:h2:file:./image_uploader'
   jpa.hibernate:

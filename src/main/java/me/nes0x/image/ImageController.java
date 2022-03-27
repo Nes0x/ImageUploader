@@ -29,6 +29,11 @@ class ImageController {
 
     @ModelAttribute("images")
     List<ImageReadModel> getImages(Principal principal) {
+
+        if (principal == null) {
+            return null;
+        }
+
         return imageService.getAllImagesByUserName(principal.getName());
     }
 
