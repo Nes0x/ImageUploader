@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImageUploader | Strona główna</title>
-    <link rel="shortcut icon" type="image/png" href="wzium.png">
     <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
 </head>
 <body>
     <header>
-        <h1>FileUploader - Hosting zdjec!</h1>
+        <h1>FileUploader - Hosting zdjęć!</h1>
 
         <nav>
             <ul>
@@ -36,5 +35,15 @@
             </form>
         </nav>
     </header>
+
+
+    <main th:if="${image} != null">
+        <h1>Losowe zdjęcie</h1>
+        <a th:href="@{/image/{id}(id=${image.id})}">
+            <h2 th:text="${image.title}"></h2>
+            <img th:src="@{/image/{id}(id=${image.id})}" alt="zdjęcie">
+        </a>
+
+    </main>
 </body>
 </html>

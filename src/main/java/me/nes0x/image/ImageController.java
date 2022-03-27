@@ -38,6 +38,14 @@ class ImageController {
     }
 
 
+
+    @GetMapping(path = "/{id}")
+    String getImage(@PathVariable UUID id, Model model){
+        ImageReadModel image = imageService.getImageById(id);
+        model.addAttribute("image", image);
+        return "image";
+    }
+
     @ResponseBody
     @GetMapping(path = "/{id}", produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
     ResponseEntity<Resource> getImage(@PathVariable UUID id) throws IOException {

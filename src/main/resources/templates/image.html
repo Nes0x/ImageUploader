@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImageUploader | Strona główna</title>
+    <meta property="og:title" th:content="'FileUploader | ' + ${image.title}" />
+    <meta property="og:url" th:content="'https://imageuploader.tk/image/' + ${image.id}" />
+    <meta property="og:image" th:content="'https://imageuploader.tk/image/' + ${image.id}" />
+    <meta content="#808080" data-react-helmet="true" name="theme-color"/>
+    <title th:text="'ImageUploader | ' + ${image.title}">ImageUploader | Zdjęcie</title>
     <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
 </head>
 <body>
     <header>
         <h1>FileUploader - Hosting zdjęć!</h1>
-
         <nav>
             <ul>
                 <li>
@@ -37,32 +40,8 @@
     </header>
 
     <main>
-        <h1 th:if="${message} != null" th:text="${message}"></h1>
-        <form th:action="@{/image/add}" method="post" enctype="multipart/form-data">
-            <label>Wybierz zdjęcie które chcesz dodać</label>
-            <input type="file" name="image" accept="image/png, image/jpeg"/>
-            <button type="submit">Dodaj</button>
-        </form>
-
-        <h1 th:if="${images.isEmpty()}">Nie masz dodanych żadnych zdjęć!</h1>
-
-        <div th:if="${!images.isEmpty()}">
-            <dl th:each="image : ${images}" class="Bd P(10px)">
-                <dt>
-                    <a th:href="@{/image/{id}(id=${image.id})}">
-                        <p th:text="${image.title}"></p>
-                        <img th:src="@{/image/{id}(id=${image.id})}" alt="obrazek">
-                    </a>
-                    <form th:action="@{/image/delete/{id}(id=${image.id})}" method="post">
-                        <button type="submit" th:value="${image.id}">Usuń</button>
-                    </form>
-                </dt>
-            </dl>
-        </div>
-
-
-
+        <h1 th:text="${image.title}"></h1>
+        <img th:src="@{/image/{id}(id=${image.id})}" alt="zdjęcie">
     </main>
-
 </body>
 </html>

@@ -78,13 +78,20 @@ public class ImageService {
 
     }
 
+    public List<ImageReadModel> getAllImages() {
+        return repository.findAll().stream()
+                .map(ImageReadModel::new)
+                .collect(Collectors.toList());
+
+    }
+
     public boolean deleteImageById(UUID id, String name) {
         if (repository.existsByIdAndUser_Name(id, name)) {
             Image image = repository.findById(id).get();
             File file = new File(image.getPath());
-            file.delete();
-
-            repository.deleteById(id);
+            if (file.delete()) {
+                repository.deleteById(id);
+            };
             return true;
         } else {
             return false;
