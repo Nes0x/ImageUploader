@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
+    <title>FileUploader | Błąd</title>
+    <style>
+        .Bd {
+            border: solid 1px black;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+
+        .P\(10px\) {
+            padding: 10px;
+            margin: 20px;
+        }
+
+        a p {
+            color: #181818;
+        }
+
+        dt a {
+            text-decoration: none;
+        }
+
+        .fix-form {
+            display: inline-flex;
+        }
+
+    </style>
+</head>
+<body  th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+
+<header>
+    <h1>FileUploader - Hosting zdjec!</h1>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Strona główna</a>
+            </li>
+            <li sec:authorize="!isAuthenticated()">
+                <a href="/login">Zaloguj</a>
+            </li>
+            <li sec:authorize="!isAuthenticated()">
+                <a href="/registration">Zarejestruj</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a href="/dashboard">Panel</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a href="#" onclick="document.forms['logoutForm'].submit()">Wyloguj się</a>
+            </li>
+        </ul>
+
+        <form id="logoutForm" method="post" th:action="@{/logout}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+    </nav>
+</header>
+
+
+    <main>
+        <h1 th:text="${httpStatus}">404</h1>
+        <p>
+            <a href="/" th:href="@{/}">Wróć do strony głównej</a>
+        </p>
+    </main>
+</body>
+</html>

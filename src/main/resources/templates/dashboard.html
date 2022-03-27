@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageUploader | Strona główna</title>
+    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
+</head>
+<body>
+    <header>
+        <h1>FileUploader - Hosting zdjec!</h1>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Strona główna</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()">
+                    <a href="/login">Zaloguj</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()">
+                    <a href="/registration">Zarejestruj</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a href="/dashboard">Panel</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a href="#" onclick="document.forms['logoutForm'].submit()">Wyloguj się</a>
+                </li>
+            </ul>
+
+            <form id="logoutForm" method="post" th:action="@{/logout}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+        </nav>
+    </header>
+
+    <main>
+        <h1 th:if="${message} != null" th:text="${message}"></h1>
+        <form th:action="@{/image/add}" method="post" enctype="multipart/form-data">
+            <label>Wybierz zdjęcie które chcesz dodać</label>
+            <input type="file" name="image" accept="image/png, image/jpeg"/>
+            <button type="submit">Dodaj</button>
+        </form>
+
+        <h1 th:if="${images.isEmpty()}">Nie masz dodanych żadnych zdjęć!</h1>
+
+        <div th:if="${!images.isEmpty()}">
+            <dl th:each="image : ${images}" class="Bd P(10px)">
+                <dt>
+                    <a th:href="@{/image/{id}(id=${image.id})}">
+                        <p th:text="${image.title}"></p>
+                        <img th:src="@{/image/{id}(id=${image.id})}" alt="obrazek">
+                    </a>
+                    <form th:action="@{/image/delete/{id}(id=${image.id})}" method="post">
+                        <button type="submit" th:value="${image.id}">Usuń</button>
+                    </form>
+                </dt>
+            </dl>
+        </div>
+
+
+
+    </main>
+
+</body>
+</html>

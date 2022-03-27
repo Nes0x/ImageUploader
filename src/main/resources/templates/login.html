@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
+    <title>ImageUploader | Zaloguj się</title>
+</head>
+
+<body>
+    <main>
+        <form method="post" th:action="@{/login}">
+            <h2>Zaloguj się</h2>
+
+            <div>
+                <span th:text="${message}"></span>
+                <input name="username" type="text" placeholder="Login" autofocus/>
+                <input name="password" type="password" placeholder="Hasło"/>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <button type="submit">Zaloguj</button>
+                <span class="has-error" th:text="${error}"></span>
+
+                <h4><a href="/">Wróć na strone główną</a></h4>
+                <h4><a href="/register">Stwórz konto</a></h4>
+            </div>
+        </form>
+    </main>
+
+
+</body>
+
+</html>

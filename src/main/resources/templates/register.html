@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
+    <title>ImageUploader | Rejestracja</title>
+</head>
+<body>
+
+    <main>
+        <form method="post" th:object="${user}" th:action="@{/register}">
+            <h1 th:if="${message != null}" th:text="${message}"></h1>
+            <a href="/login" th:if="${message != null}">Kliknij aby się zalogować</a>
+            <h2>Stwórz konto</h2>
+            <div>
+                <input type="text" th:field="*{name}" placeholder="Login" autofocus>
+                <span class="has-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+
+            <div>
+                <input type="password" th:field="*{password}" placeholder="Hasło">
+                <span class="has-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            </div>
+            <button type="submit">Zarejestruj</button>
+            <h4 ><a href="/">Wróć na strone główną</a></h4>
+            <h4 ><a href="/login">Zaloguj się</a></h4>
+
+        </form>
+    </main>
+</body>
+</html>
