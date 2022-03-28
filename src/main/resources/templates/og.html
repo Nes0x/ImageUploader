@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImageUploader | Strona główna</title>
+    <title>ImageUploader | Edytor OG</title>
     <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
     <style>
         .center {
@@ -45,13 +45,14 @@
     </header>
 
 
-    <main th:if="${image} != null">
-        <h1 class="center">Losowe zdjęcie</h1>
-        <a th:href="@{/image/{id}(id=${image.id})}">
-            <h2 class="center" th:text="${image.title}"></h2>
-            <img th:src="@{/image/api/{id}(id=${image.id})}" alt="zdjęcie">
-        </a>
-
-    </main>
+    <main>
+        <h1 th:if="${message != null}" th:text="${message}"></h1>
+        <form method="post" th:action="@{/og}">
+            <input th:value="${user.url}" name="url" type="text" placeholder="Link" autofocus/>
+            <input th:value="${user.description}" name="description" type="text" placeholder="Opis" autofocus/>
+            <input th:value="${user.color}" name="color" type="color" placeholder="Kolor" autofocus/>
+            <button type="submit">Zapisz</button>
+        </form>
+  </main>
 </body>
 </html>

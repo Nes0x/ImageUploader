@@ -5,15 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" th:content="'FileUploader | ' + ${image.title}" />
-    <meta property="og:url" th:content="'https://imageuploader.tk/image/' + ${image.id}" />
-    <meta property="og:image" th:content="'https://imageuploader.tk/image/' + ${image.id}" />
-    <meta content="#808080" data-react-helmet="true" name="theme-color"/>
+    <meta property="og:url" th:content="${user.url}" />
+    <meta property="og:description" th:content="${user.description}" />
+    <meta property="twitter:image" th:content="'https://imageuploader.tk/image/api/' + ${image.id}" />
+    <meta th:content="${user.color}" data-react-helmet="true" name="theme-color"/>
     <title th:text="'ImageUploader | ' + ${image.title}">ImageUploader | Zdjęcie</title>
     <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
+    <style>
+        .center {
+            text-align: center;
+        }
+    </style>
+
 </head>
 <body>
     <header>
-        <h1>FileUploader - Hosting zdjęć!</h1>
+        <h1>ImageUploader - Hosting zdjęć!</h1>
         <nav>
             <ul>
                 <li>
@@ -29,6 +36,9 @@
                     <a href="/dashboard">Panel</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
+                    <a href="/og">Edytor OG</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
                     <a href="#" onclick="document.forms['logoutForm'].submit()">Wyloguj się</a>
                 </li>
             </ul>
@@ -40,8 +50,9 @@
     </header>
 
     <main>
-        <h1 th:text="${image.title}"></h1>
-        <img th:src="@{/image/{id}(id=${image.id})}" alt="zdjęcie">
+        <h1 class="center" th:text="${image.title}"></h1>
+        <img th:src="@{/image/api/{id}(id=${image.id})}" alt="zdjęcie">
+        <p class="center" th:text="|Wrzucone przez ${image.user.name}|"></p>
     </main>
 </body>
 </html>

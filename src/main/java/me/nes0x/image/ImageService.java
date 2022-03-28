@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class ImageService {
         this.userRepository = userRepository;
     }
 
-    public ImageReadModel save(MultipartFile file, String username) throws IOException {
+    public ImageReadModel save(MultipartFile file, String username, boolean secretImage) throws IOException {
         switch (file.getContentType()) {
             case MediaType.IMAGE_JPEG_VALUE:
             case MediaType.IMAGE_PNG_VALUE:
@@ -35,6 +36,7 @@ public class ImageService {
                 UUID uuid = UUID.randomUUID();
                 image.setId(uuid);
                 image.setUser(user);
+                image.setSecretImage(secretImage);
                 image.setExtension(file.getContentType());
                 image.setTitle(file.getOriginalFilename());
                 String path = String.valueOf(Paths.get("user_images", username, uuid + "." +
@@ -78,25 +80,37 @@ public class ImageService {
 
     }
 
-    public List<ImageReadModel> getAllImages() {
-        return repository.findAll().stream()
+    public List<ImageReadModel> getAllImagesBySecret() {
+        return repository.findAllBySecretImageIsTrue()
+                .stream()
                 .map(ImageReadModel::new)
                 .collect(Collectors.toList());
 
     }
 
-    public boolean deleteImageById(UUID id, String name) {
+    public boolean deleteImage(UUID id, String name) {
         if (repository.existsByIdAndUser_Name(id, name)) {
             Image image = repository.findById(id).get();
             File file = new File(image.getPath());
             if (file.delete()) {
                 repository.deleteById(id);
-            };
+            }
             return true;
         } else {
             return false;
         }
 
+    }
+
+    @Transactional
+    public boolean changeImage(UUID id, String name) {
+        if (repository.existsByIdAndUser_Name(id, name)) {
+            Image image = repository.findById(id).get();
+            image.setSecretImage(!image.isSecretImage());
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

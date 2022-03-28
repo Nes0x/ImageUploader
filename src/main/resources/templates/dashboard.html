@@ -6,10 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImageUploader | Strona główna</title>
     <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
+    <style>
+        .center {
+            text-align: center;
+        }
+        .checkbox {
+            vertical-align: middle;
+            position: relative;
+            bottom: 1px;
+        }
+    </style>
+
 </head>
 <body>
     <header>
-        <h1>FileUploader - Hosting zdjęć!</h1>
+        <h1>ImageUploader - Hosting zdjęć!</h1>
 
         <nav>
             <ul>
@@ -24,6 +35,9 @@
                 </li>
                 <li sec:authorize="isAuthenticated()">
                     <a href="/dashboard">Panel</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a href="/og">Edytor OG</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
                     <a href="#" onclick="document.forms['logoutForm'].submit()">Wyloguj się</a>
@@ -41,6 +55,9 @@
         <form th:action="@{/image/add}" method="post" enctype="multipart/form-data">
             <label>Wybierz zdjęcie które chcesz dodać</label>
             <input type="file" name="image" accept="image/png, image/jpeg"/>
+            <label>Czy zdjęcie może pojawiać się jako losowe?</label>
+            <input type="checkbox" name="secretImage">
+            <br>
             <button type="submit">Dodaj</button>
         </form>
 
@@ -49,13 +66,20 @@
         <div th:if="${!images.isEmpty()}">
             <dl th:each="image : ${images}" class="Bd P(10px)">
                 <dt>
+
                     <a th:href="@{/image/{id}(id=${image.id})}">
-                        <p th:text="${image.title}"></p>
-                        <img th:src="@{/image/{id}(id=${image.id})}" alt="obrazek">
+                        <p class="center" th:text="${image.title}"></p>
+                        <input disabled class="checkbox" type="checkbox" th:checked="${image.secretImage}">
+                        <img th:src="@{/image/api/{id}(id=${image.id})}" alt="zdjęcie">
                     </a>
+
                     <form th:action="@{/image/delete/{id}(id=${image.id})}" method="post">
-                        <button type="submit" th:value="${image.id}">Usuń</button>
+                        <button type="submit">Usuń</button>
                     </form>
+                    <form th:action="@{/image/change/{id}(id=${image.id})}" method="post">
+                        <button type="submit">Zmień status zdjęcia</button>
+                    </form>
+
                 </dt>
             </dl>
         </div>

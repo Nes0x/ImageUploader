@@ -13,6 +13,7 @@ public class Image {
     private String title;
     private String extension;
     private String path;
+    private boolean secretImage;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -59,5 +60,13 @@ public class Image {
 
     void setUser(final User user) {
         this.user = user;
+    }
+
+    boolean isSecretImage() {
+        return secretImage;
+    }
+
+    void setSecretImage(final boolean secretImage) {
+        this.secretImage = secretImage;
     }
 }

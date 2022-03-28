@@ -10,6 +10,7 @@ public class ImageReadModel {
     private String title;
     private String extension;
     private String path;
+    private boolean secretImage;
     private User user;
 
 
@@ -18,6 +19,7 @@ public class ImageReadModel {
         title = source.getTitle();
         extension = source.getExtension();
         path = source.getPath();
+        secretImage = source.isSecretImage();
         user = source.getUser();
     }
 
@@ -59,5 +61,13 @@ public class ImageReadModel {
 
     public void setUser(final User user) {
         this.user = user;
+    }
+
+    public boolean isSecretImage() {
+        return secretImage;
+    }
+
+    public void setSecretImage(final boolean secretImage) {
+        this.secretImage = secretImage;
     }
 }
