@@ -34,7 +34,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/image/add").authenticated()
                 .antMatchers("/image/delete").authenticated()
                 .antMatchers("/register", "/", "/image/**").permitAll()
-                .antMatchers("/user_images", "/user_images/**").denyAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

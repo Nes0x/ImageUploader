@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" th:content="'FileUploader | ' + ${image.title}" />
+    <meta property="og:title" th:content="'ImageUploader | ' + ${image.title}" />
     <meta property="og:url" th:content="${user.url}" />
     <meta property="og:description" th:content="${user.description}" />
-    <meta property="twitter:image" th:content="'https://imageuploader.tk/image/api/' + ${image.id}" />
+    <meta property="og:image" th:content="'https://imageuploader.tk/image/api/' + ${image.id}" />
+    <meta property="og:image:width" content="300" />
+    <meta property="og:image:height" content="300" />
     <meta th:content="${user.color}" data-react-helmet="true" name="theme-color"/>
     <title th:text="'ImageUploader | ' + ${image.title}">ImageUploader | Zdjęcie</title>
     <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_mischka.min.css">
