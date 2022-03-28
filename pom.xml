@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>me.nes0x</groupId>
 	<artifactId>image_uploader</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>image_uploader</name>
 	<description>image_uploader</description>
 	<properties>
