@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -39,14 +42,15 @@ class ImageController {
         return imageService.getAllImagesByUserName(principal.getName());
     }
 
-
-
     @GetMapping(path = "/{id}")
-    String getImage(@PathVariable UUID id, Model model){
+    String getImage(@PathVariable UUID id, Model model) throws IOException {
         ImageReadModel image = imageService.getImageById(id);
         User user = image.getUser();
+        BufferedImage bufferedImage = ImageIO.read(new File(String.valueOf(Paths.get("./", image.getPath()))));
         model.addAttribute("image", image);
         model.addAttribute("user", user);
+        model.addAttribute("width",  bufferedImage.getWidth());
+        model.addAttribute("height", bufferedImage.getHeight());
         return "image";
     }
 
